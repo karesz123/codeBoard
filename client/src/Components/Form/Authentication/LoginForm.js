@@ -2,6 +2,7 @@ import {Component} from "react";
 import InputField from "../InputField"
 import PropTypes  from 'prop-types';
 import {Link} from "react-router-dom";
+import {ACCESS_TOKEN } from '../../../Model/LocalStorage/Items';
 
 class LoginForm extends Component {
 
@@ -22,7 +23,12 @@ class LoginForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.submit(JSON.stringify(this.state));
+        this.props.submit(JSON.stringify(this.state))
+            .then(response => {
+                localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+                this.props.history.push("/homepage");
+            })
+            .catch(error => console.log('Your Username or Password is incorrect. Please try again!'));
     }
 
     render() {

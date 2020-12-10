@@ -1,16 +1,18 @@
 package com.codeBoard.security;
 
-import com.codeBoard.security.Jwt.JwtAuthenticationEntryPoint;
-import com.codeBoard.security.Jwt.JwtAuthenticationFilter;
-import com.codeBoard.security.User.CustomUserDetailsService;
+import com.codeBoard.security.Jwt.AuthenticationEntry;
+import com.codeBoard.security.Jwt.AuthenticationFilter;
+import com.codeBoard.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,29 +20,35 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class WenSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final List<String> allowedHeaders = List.of("Authorization", "Cache-Control", "Content-Type");
+    private final List<String> allowedOrigins = List.of("*");
+    private final List<String> allowedMethods = List.of("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH");
+
     @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private AuthenticationFilter authenticationFilter;
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private AuthenticationEntry unauthorizedHandler;
 
     @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        /*
-        auth.inMemoryAuthentication()
-                .withUser("user1").password(passwordEncoder().encode("user1Pass")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("ADMIN");
-        */
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -50,37 +58,25 @@ public class WenSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/index*", "/static/**", "/*.js", "/*.json", "/*.ic, /**/*.html").permitAll()
-                .anyRequest().authenticated();
-                /*
+                .antMatchers("/index*", "/static/**", "/*.js", "/*.json", "/*.ic").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/homepage.html", true)
-                .failureUrl("/index.html?error=true")
-                .and()
-                .logout().logoutUrl("/perform_logout")
-                .deleteCookies("JSESSIONID")
-                .and()
-                .httpBasic();
-                */
-                /*
-                .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-                */
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(java.util.List.of("*"));
-        configuration.setAllowedMethods(java.util.List.of("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedOrigins(allowedOrigins);
+        configuration.setAllowedHeaders(allowedHeaders);
+        configuration.setAllowedMethods(allowedMethods);
         configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(java.util.List.of("Authorization", "Cache-Control", "Content-Type"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

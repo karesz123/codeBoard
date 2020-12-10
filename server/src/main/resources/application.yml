@@ -1,3 +1,7 @@
 app:
   jwtSecret: JWTSuperSecretKey
   jwtExpirationInMs: 604800000
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update

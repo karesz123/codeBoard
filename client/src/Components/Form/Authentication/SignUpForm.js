@@ -24,7 +24,11 @@ class SignUpForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.submit(JSON.stringify(this.state));
+        this.props.submit(JSON.stringify(this.state))
+            .then(response => {
+                this.props.history.push("/");
+            })
+            .catch(error => console.log(error.message || "Sorry! Something went wrong. Please try again!"));
     }
 
     render() {
@@ -46,5 +50,6 @@ class SignUpForm extends Component {
 SignUpForm.propTypes = {
     submit: PropTypes.string
 }
+
 
 export default SignUpForm;
