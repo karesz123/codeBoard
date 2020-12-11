@@ -1,4 +1,5 @@
-## Building a Full Stack Login application with technologies:
+## Full Stack Login application
+## Technologies:
 - Spring (Web, Boot, REST, JPA, Security, Validation)
 - Lombok
 - Nginx
@@ -6,6 +7,7 @@
 - JWT(JSON Web Token)
 - PostgreSQL
 
+## Overview of application management:
 The entire application is managed by Docker:
 - The server folder:
   - contains the back-end side of the application
