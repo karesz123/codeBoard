@@ -4,7 +4,7 @@
 - Nginx
 - React
 - JWT(JSON Web Token)
-- PostgresSQL
+- PostgreSQL
 
 The entire application is managed by Docker:
 - The server folder:
@@ -17,7 +17,7 @@ The entire application is managed by Docker:
   -  docker-compose.yml file contains services for:
 		-	front-end container
 		-	back-end container
-		-	postgres container
+		-	postgreSQL container
 
 
 ## Steps to setup the Spring Boot React Login application
@@ -31,7 +31,7 @@ The entire application is managed by Docker:
 
 2. **Build and Run the application**
 
-	You can build and run the entire application (Spring, Nginx, React, PostgresSQL) by typing the following command -
+	You can build and run the entire application (Spring, Nginx, React, PostgreSQL) by typing the following command -
 
 	```bash
 	docker-compose up --build
