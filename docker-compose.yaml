@@ -14,7 +14,6 @@ services:
 
   app-server:
     build:
-      network: host
       context: server
       dockerfile: Dockerfile
     ports:
