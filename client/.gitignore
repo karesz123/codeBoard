@@ -29,3 +29,4 @@ yarn-error.log*
 .sass-cache/
 src/resources/css/generated/
 *.css.map
+src/resources/scss/*.css
