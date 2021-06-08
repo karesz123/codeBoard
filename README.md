@@ -43,8 +43,8 @@ The entire application is managed by Docker:
 	The back-end server will be available on port `8080`.
 
 ### Login
-![image info](/home/karoly/Pictures/Screenshot from 2021-06-08 23-01-15.png)
+![image info](examples/login.png)
 ### Register
-![image info](/home/karoly/Pictures/Screenshot from 2021-06-08 23-01-22.png)
+![image info](examples/register.png)
 
 
