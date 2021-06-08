@@ -1,2 +1,5 @@
+# idea files
 .idea/*
+
+# output files
 /out/
