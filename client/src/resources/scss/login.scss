@@ -22,15 +22,16 @@ html, body {
 
 #root {
   @include full-screen-element;
-}
-
-.form-div {
-  @include gradient-directional(#944dff, #3d0099);
-  border-radius: 25px;
-  padding: 1%;
+  @include gradient-radial(#884dff, #4B77BE);
 }
 
 .container-div {
-  background-color: red;
   height: 500px;
+  //@include gradient-radial(#884dff, #4B77BE);
+}
+
+.form-div {
+  @include gradient-directional(#4B77BE, #3d0099);
+  border-radius: 25px;
+  padding: 1%;
 }
