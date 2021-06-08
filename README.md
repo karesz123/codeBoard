@@ -27,8 +27,8 @@ The entire application is managed by Docker:
 1. **Clone the application**
 
 	```bash
-	git clone https://github.com/karesz123/codeBoard.git
-	cd codeBoard
+	git clone https://github.com/karesz123/loginApp.git
+	cd loginApp
 	```
 
 2. **Build and Run the application**
@@ -41,5 +41,10 @@ The entire application is managed by Docker:
 	
 	The front-end server will start on port `3000`.
 	The back-end server will be available on port `8080`.
+
+### Login
+![image info](/home/karoly/Pictures/Screenshot from 2021-06-08 23-01-15.png)
+### Register
+![image info](/home/karoly/Pictures/Screenshot from 2021-06-08 23-01-22.png)
 
 
