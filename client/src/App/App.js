@@ -10,12 +10,14 @@ class App extends Component{
   render() {
     return (
         <BrowserRouter>
-          <div className={"App card-body w-25 row d-flex mx-auto"} >
-            <Switch>
-                <Route exact path="/homepage" render={(routeProps) => (window.location.href="homepage.html")}/>
-                <Route exact path="/signup" render={(routeProps) => (<SignUpForm submit={signUp} {...routeProps}/>)}/>
-                <Route exact path= "/" render={(routeProps) => (<LoginForm submit={login}  {...routeProps}/>)}/>
-            </Switch>
+          <div className={"container-div mx-auto mt-md-10 col-sm-10"}>
+            <div className={"App form-div mx-auto mt-md-5 col-sm-4 col-md-2"}>
+                <Switch>
+                    <Route exact path="/homepage" render={(routeProps) => (window.location.href="homepage.html")}/>
+                    <Route exact path="/signup" render={(routeProps) => (<SignUpForm submit={signUp} {...routeProps}/>)}/>
+                    <Route exact path= "/" render={(routeProps) => (<LoginForm submit={login}  {...routeProps}/>)}/>
+                </Switch>
+            </div>
           </div>
         </BrowserRouter>
     )
