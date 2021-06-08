@@ -39,7 +39,7 @@ class LoginForm extends Component {
                     <InputField type="password" name="password" placeholder="Password" handleChange={this.handleChange}/>
                     <input className={"btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"} type="submit" value="LOG IN"/>
                 </form>
-                <Link to="/signup" className="btn btn-primary">Sign up</Link>
+                <Link to="/signup" className="btn btn-primary form-control">Sign up</Link>
             </div>
         )
     }
